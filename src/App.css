@@ -1,0 +1,253 @@
+#root {
+  width: 100%; /* Make sure it takes up the full screen width */
+  margin: 0;
+  /* padding: 2rem; */
+  text-align: center;
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  color: black;
+  background-color: white;
+
+  --lightpink: #f9c5d1;
+  --darkred: #9b2d20;
+  --palevioletred: #db7093;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column; /* Ensure content flows down vertically */
+  /* place-items: center; */
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+.flashcard-wrapper {
+  display: flex;
+  justify-content: center; /* Horizontally center */
+  align-items: center;       /* Vertically center */
+  /* height: 100vh; */
+}
+
+.flashcard {
+  width: 500px;
+  height: 300px;
+  cursor: pointer;
+}
+
+.flashcard-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.flashcard.flipped .flashcard-inner {
+  transform: rotateY(180deg);
+}
+
+.flashcard-front, .flashcard-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #e117a1;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+
+.flashcard-front {
+  background-color: lightpink;
+  color: white;
+}
+
+.flashcard-back {
+  background-color: #4f1b08;
+  color: white;
+  transform: rotateY(180deg);
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:active {
+  background-color: #4CAF50;
+}
+
+.input-section {
+  margin-top: 20px;
+}
+
+.input-section input {
+  padding: 10px;
+  width: 250px;
+  font-size: 16px;
+  background-color: lightpink;
+  border: 2px solid darkred;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.input-section button {
+  padding: 10px 20px;
+  margin-left: 10px;
+  background-color: darkred;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.input-section button:hover {
+  background-color: palevioletred;
+}
+
+.navigation-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Space between the buttons */
+}
+
+.navigation-buttons button {
+  padding: 10px 20px;
+  background-color: darkred;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.navigation-buttons button:hover {
+  background-color: palevioletred;
+}
+
+nav {
+  background-color: var(--lightpink);
+  width: 100%;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+nav .logo {
+  font-size: 2.2rem;
+  font-weight: 700; /* Or 800 */
+  color: var(--darkred);
+  font-family: 'Roboto Slab', serif; /* Apply the Google Font */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+nav .hidden { /* Ensure the hidden class is defined for desktop menu */
+  display: none;
+}
+
+nav .md\:flex { /* Tailwind's md:flex utility - ensures it's flex on medium screens and up */
+  display: none; /* Hidden by default, will be overridden by media query */
+}
+
+@media (min-width: 768px) { /* Changed max-width to min-width */
+  nav {
+    flex-direction: row; /* Ensure logo and menu are in a row on larger screens */
+    align-items: center;
+  }
+
+  nav .md\:flex {
+    display: flex; /* Show desktop menu on medium screens and up */
+    align-items: center;
+  }
+
+  nav .md\:flex a { /* Style the desktop menu links */
+    text-decoration: none;
+    color: var(--darkred);
+    font-weight: 600;
+    transition: color 0.3s ease;
+    padding: 0.5rem 1rem; /* Add padding for spacing */
+    border-radius: 0.25rem; /* Optional: Add rounded corners */
+  }
+
+  nav .md\:flex a:hover {
+    color: var(--palevioletred);
+    background-color: rgba(0, 0, 0, 0.05); /* Optional hover effect */
+  }
+
+  nav .menu-toggle {
+    display: none; /* Hide hamburger on larger screens */
+  }
+}
+
+@media (max-width: 767px) { /* Adjusted breakpoint */
+  nav {
+    flex-direction: row; /* Keep logo and hamburger on the same line */
+    align-items: center;
+  }
+
+  nav .md\:flex {
+    display: none !important; /* Hide desktop menu on smaller screens */
+  }
+
+  nav .menu-toggle {
+    display: block; /* Show hamburger on smaller screens */
+    cursor: pointer;
+  }
+
+  nav .space-x-8 { /* Hide Tailwind spacing on mobile */
+    display: none;
+  }
+
+  nav > div:nth-child(2) { /* Target the desktop menu div directly */
+    display: none; /* Hide it initially on mobile */
+  }
+
+  nav > div:nth-child(3) { /* Target the hamburger div */
+    order: 1; /* Push hamburger to the right */
+  }
+
+  .block { /* Define the block class for mobile menu links */
+    display: block;
+    width: 100%;
+    padding: 0.5rem 0;
+  }
+
+  /* Style the mobile menu container */
+  nav + div { /* Select the div immediately after the nav (mobile menu) */
+    background-color: var(--lightpink);
+    margin-top: 0.5rem;
+    padding: 1rem;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem; /* Adjusted gap for mobile links */
+    width: 100%; /* Make it full width on mobile */
+    box-sizing: border-box;
+  }
+
+  nav + div a {
+    color: var(--darkred);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+    padding: 0.75rem 0; /* Add vertical padding for better touch targets */
+  }
+
+  nav + div a:hover {
+    color: var(--palevioletred);
+    background-color: rgba(0, 0, 0, 0.05); /* Optional hover effect */
+  }
+}
